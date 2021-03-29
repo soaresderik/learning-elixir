@@ -20,7 +20,8 @@ defmodule DungeonCrawl.Room do
       },
       %Room{
         description: "Você encontrou um lugar tranquilo. Parece seguro para um descanso",
-        actions: [forward(), rest()]
+        actions: [forward(), rest()],
+        trigger: nil
       }
     ]
 end
