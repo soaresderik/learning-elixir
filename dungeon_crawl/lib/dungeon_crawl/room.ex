@@ -20,8 +20,8 @@ defmodule DungeonCrawl.Room do
       },
       %Room{
         description: "Você encontrou um lugar tranquilo. Parece seguro para um descanso",
-        actions: [forward(), rest()],
-        trigger: nil
+        actions: [forward(), rest(), search()],
+        trigger: Enum.random([Triggers.Rest, Triggers.EnemyHidden])
       }
     ]
 end

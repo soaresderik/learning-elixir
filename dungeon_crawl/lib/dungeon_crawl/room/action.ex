@@ -6,7 +6,7 @@ defmodule DungeonCrawl.Room.Action do
 
   def forward, do: %Action{id: :forward, label: "Siga em frente."}
   def rest, do: %Action{id: :rest, label: "Observe melhor e descance."}
-  def search, do: %Action{id: :search, label: "Encontre a sala."}
+  def search, do: %Action{id: :search, label: "Procure algo na sala."}
 
   defimpl String.Chars do
     def to_string(action), do: action.label
