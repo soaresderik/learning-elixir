@@ -8,7 +8,12 @@
 use Mix.Config
 
 config :rumbl,
-  ecto_repos: [Rumbl.Repo]
+  ecto_repos: [Rumbl.Repo],
+  username: "postgres",
+  password: "postgres",
+  database: "rumbl_dev",
+  hostname: "localhost",
+  pool_size: 10
 
 # Configures the endpoint
 config :rumbl, RumblWeb.Endpoint,
