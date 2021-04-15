@@ -1,29 +1,17 @@
 defmodule RumblWeb do
-  @moduledoc """
-  The entrypoint for defining your web interface, such
-  as controllers, views, channels and so on.
-
-  This can be used in your application as:
-
-      use RumblWeb, :controller
-      use RumblWeb, :view
-
-  The definitions below will be executed for every view,
-  controller, etc, so keep them short and clean, focused
-  on imports, uses and aliases.
-
-  Do NOT define functions inside the quoted expressions
-  below. Instead, define any helper function in modules
-  and import those modules here.
-  """
-
   def controller do
     quote do
       use Phoenix.Controller, namespace: RumblWeb
 
+      alias Rumbl.Repo
+      import Ecto
+      import Ecto.Query, only: [from: 1, from: 2]
+
       import Plug.Conn
       import RumblWeb.Gettext
       alias RumblWeb.Router.Helpers, as: Routes
+
+      import Rumbl.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -48,6 +36,8 @@ defmodule RumblWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+
+      import Rumbl.Auth, only: [authenticate_user: 2]
     end
   end
 
