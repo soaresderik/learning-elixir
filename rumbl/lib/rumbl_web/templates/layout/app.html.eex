@@ -10,7 +10,20 @@
   </head>
   <body>
     <header>
+    
       <section class="container">
+      <div class="header">
+        <ol class="breadcrumb text-right">
+          <%= if @current_user do %>
+            <li><%= @current_user.username %></li>
+            <li> <%= link "Log out", to: Routes.session_path(@conn, :delete, @current_user),  method: "delete" %> </li>
+          <% else %>
+            <li><%= link "Register", to: Routes.user_path(@conn, :new) %></li>
+            <li><%= link "Log in", to: Routes.session_path(@conn, :new) %></li>
+          <% end %>
+        </ol>
+        <span class="logo"></span>
+      </div>
         <nav role="navigation">
           <ul>
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
@@ -31,3 +44,4 @@
     </main>
   </body>
 </html>
+
