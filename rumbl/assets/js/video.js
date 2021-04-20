@@ -31,8 +31,20 @@ let Video = {
         })
 
         vidChannel.join()
-            .receive("ok", resp => console.log("Joined the video channel", resp))
+            .receive("ok", ({ annotations }) => {
+                this.scheduleMessage(msgContainer, annotations)
+            })
             .receive("error", reason => console.log("Join failed", reason))
+
+        msgContainer.addEventListener("click", e => {
+            e.preventDefault();
+
+            let seconds = e.target.getAttribute("data-seek") || e.target.parentNode.getAttribute("data-seek")
+
+            if (!seconds) return;
+
+            Player.seekTo(seconds);
+        });
     },
 
     esc(str) {
@@ -46,12 +58,36 @@ let Video = {
 
         template.innerHTML = `
          <a href="#" data-seek="${this.esc(at)}" >
+            [${this.formatTime(at)}]
             <b>${this.esc(user.username)}</b>: ${this.esc(body)}
          </a>
         `
 
         msgContainer.appendChild(template);
         msgContainer.scrollTop = msgContainer.scrollHeight
+    },
+
+    scheduleMessage(msgContainer, annotations) {
+        setTimeout(() => {
+            let ctime = Player.getCurrentTime();
+            let remaining = this.renderAtTime(annotations, ctime, msgContainer)
+            this.scheduleMessage(msgContainer, remaining)
+        })
+    },
+
+    renderAtTime(annotations, seconds, msgContainer) {
+        return annotations.filter(ann => {
+            if (ann.at > seconds) return true;
+
+            this.renderAnnotation(msgContainer, ann);
+            return false;
+        })
+    },
+
+    formatTime(at) {
+        let date = new Date(null);
+        date.setSeconds(at / 1000);
+        return date.toISOString().substr(14, 5)
     }
 }
 

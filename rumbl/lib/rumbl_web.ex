@@ -44,7 +44,10 @@ defmodule RumblWeb do
   def channel do
     quote do
       use Phoenix.Channel
+      alias Rumbl.Repo
       import RumblWeb.Gettext
+      import Ecto
+      import Ecto.Query
     end
   end
 
