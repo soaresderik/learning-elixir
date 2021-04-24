@@ -6,17 +6,13 @@ defmodule Rumbl.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+
     children = [
-      # Start the Ecto repository
       Rumbl.Repo,
-      # Start the Telemetry supervisor
       RumblWeb.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Rumbl.PubSub},
-      # Start the Endpoint (http/https)
       RumblWeb.Endpoint
-      # Start a worker by calling: Rumbl.Worker.start_link(arg)
-      # {Rumbl.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

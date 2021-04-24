@@ -7,7 +7,7 @@ defmodule RumblWeb.VideoChannel do
     last_seen_id = params["last_seen_id"] || 0
     video_id = String.to_integer(video_id)
     video = Repo.get!(Rumbl.Video, video_id)
-    IO.inspect last_seen_id
+
     annotations = Repo.all(
       from a in assoc(video, :annotations),
         where: a.id > ^last_seen_id,
