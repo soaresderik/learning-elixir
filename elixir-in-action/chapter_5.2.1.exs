@@ -7,6 +7,10 @@ async_query = fn query ->
   spawn(fn -> IO.puts(run_query.(query)) end)
 end
 
+# Aqui é execução é feita de forma sequencial
+# run_query.("query 1")
+# Enum.map(1..5, &run_query.("query #{&1}"))
+
 # spawn(fn -> IO.puts(run_query.("query 2")) end)
 # async_query.("query 1")
 
