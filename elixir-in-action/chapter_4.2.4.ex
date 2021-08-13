@@ -1,7 +1,13 @@
 defmodule TodoList do
   defstruct auto_id: 0, entries: %{}
 
-  def new(), do: %__MODULE__{}
+  def new(entries \\ []) do
+    Enum.reduce(
+      entries,
+      %__MODULE__{},
+      &add_entry(&2, &1)
+    )
+  end
 
   def add_entry(todo_list, entry) do
     entry = Map.put(entry, :id, todo_list.auto_id)
@@ -34,6 +40,12 @@ defmodule TodoList do
     %__MODULE__{todo_list | entries: Map.delete(todo_list.entries, entry_id)}
   end
 end
+
+# entries = [
+#   %{data: ~D[2018-12-19], title: "Dentista"},
+#   %{data: ~D[2018-12-20], title: "Shopping"},
+#   %{data: ~D[2018-12-19], title: "Filmes"},
+# ]
 
 # todo_list =
 #   TodoList.new()  |>
