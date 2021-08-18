@@ -101,7 +101,7 @@ end
 
 # TodoServer.start()
 
-# CREATE
+# # CREATE
 # TodoServer.add_entry(%{date: ~D[2018-12-19], title: "Dentista"})
 # TodoServer.add_entry(%{date: ~D[2018-12-20], title: "Shopping"})
 # TodoServer.add_entry(%{date: ~D[2018-12-19], title: "Filmes"})
