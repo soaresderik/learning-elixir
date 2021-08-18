@@ -7,7 +7,7 @@ defmodule ServerProcess do
   end
 
   def call(server_pid, request) do
-    send(server_pid, {request, self()})
+    send(server_pid, {:call, request, self()})
 
     receive do
       {:response, response} ->
@@ -17,7 +17,7 @@ defmodule ServerProcess do
 
   defp loop(callback_module, current_state) do
     receive do
-      {request, caller} ->
+      {:call, request, caller} ->
         {response, new_state} =
           callback_module.handle_call(
             request,
@@ -32,6 +32,18 @@ defmodule ServerProcess do
 end
 
 defmodule KeyValueStore do
+  def start do
+    ServerProcess.start(KeyValueStore)
+  end
+
+  def put(pid, key, value) do
+    ServerProcess.call(pid, {:put, key, value})
+  end
+
+  def get(pid, key) do
+    ServerProcess.call(pid, {:get, key})
+  end
+
   def init do
     %{}
   end
@@ -46,7 +58,7 @@ defmodule KeyValueStore do
 end
 
 # # Executando
-# pid = ServerProcess.start(KeyValueStore)
+# pid = KeyValueStore.start
 
-# ServerProcess.call(pid, {:put, :some_key, :some_value})
-# ServerProcess.call(pid, {:get, :some_key})
+# KeyValueStore.put(pid, :some_key, :some_value)
+# KeyValueStore.get(pid, :some_key)
