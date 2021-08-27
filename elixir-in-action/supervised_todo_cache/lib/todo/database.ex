@@ -3,7 +3,7 @@ defmodule Todo.Database do
 
   @db_folder "./supervised_todo_cache"
 
-  def start do
+  def start_link do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
@@ -37,7 +37,7 @@ defmodule Todo.Database do
 
   defp start_workers do
     for index <- 0..2, into: %{} do
-      {:ok, pid} = Todo.DatabaseWorker.start(@db_folder)
+      {:ok, pid} = Todo.DatabaseWorker.start_link(@db_folder)
       {index, pid}
     end
   end

@@ -1,7 +1,7 @@
 defmodule Todo.Server do
   use GenServer
 
-  def start(list_name) do
+  def start_link(list_name) do
     IO.puts("Starting database server.")
     GenServer.start_link(Todo.Server, list_name)
   end
